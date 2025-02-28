@@ -6,14 +6,23 @@ import {useState} from "react";
 function App() {
     const [projectsState, setProjectsState] = useState({
         selectedProjectId: undefined,
-        projects: []
+        projects:[]
     });
 
-    function handleStartAddProject() {
-        setProjectsState(prevState => {
+    function handleStartAddProject(){
+        setProjectsState((prevState)=> {
             return {
                 ...prevState,
                 selectedProjectId: null,
+            };
+        });
+    }
+
+    function handleCancelAddProject(){
+        setProjectsState((prevState)=> {
+            return {
+                ...prevState,
+                selectedProjectId: undefined,
             };
         });
     }
@@ -38,9 +47,11 @@ function App() {
     let content;
 
     if (projectsState.selectedProjectId === null) {
-        content = <NewProjects onAdd={handleAddProject}/>
+        content = (
+            <NewProjects onAdd={handleAddProject} onCancel={handleCancelAddProject} />
+        );
     } else if (projectsState.selectedProjectId === undefined) {
-        content = <NoProjectSelected onStartAddProject={handleStartAddProject}/>
+        content = <NoProjectSelected onStartAddProject={handleStartAddProject} />;
     }
 
     return (

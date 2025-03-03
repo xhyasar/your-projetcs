@@ -7,9 +7,17 @@ import SelectedProject from "./components/SelectedProject.jsx";
 function App() {
     const [projectsState, setProjectsState] = useState({
         selectedProjectId: undefined,
-        projects: []
+        projects: [],
+        tasks: []
     });
 
+    function handleAddTask(){
+
+    }
+
+    function handleDeleteTask(){
+
+    }
 
     function handleSelectProject(id) {
         setProjectsState((prevState) => {

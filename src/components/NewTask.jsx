@@ -1,6 +1,6 @@
 import {useState} from "react";
 
-export default function NewTask() {
+export default function NewTask({onAdd}) {
 
     const [enteredTask, setEnteredTask] = useState();
 
@@ -9,6 +9,7 @@ export default function NewTask() {
     }
 
     function handleClick(){
+        onAdd(enteredTask);
         setEnteredTask('');
     }
 

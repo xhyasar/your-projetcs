@@ -2,15 +2,26 @@ import ProjectsSidebar from "./components/ProjectsSidebar.jsx";
 import NewProjects from "./components/NewProjects.jsx";
 import NoProjectSelected from "./components/NoProjectSelected.jsx";
 import {useState} from "react";
+import SelectedProject from "./components/SelectedProject.jsx";
 
 function App() {
     const [projectsState, setProjectsState] = useState({
         selectedProjectId: undefined,
-        projects:[]
+        projects: []
     });
 
-    function handleStartAddProject(){
-        setProjectsState((prevState)=> {
+
+    function handleSelectProject(id) {
+        setProjectsState((prevState) => {
+            return {
+                ...prevState,
+                selectedProjectId: id,
+            };
+        });
+    }
+
+    function handleStartAddProject() {
+        setProjectsState((prevState) => {
             return {
                 ...prevState,
                 selectedProjectId: null,
@@ -18,8 +29,8 @@ function App() {
         });
     }
 
-    function handleCancelAddProject(){
-        setProjectsState((prevState)=> {
+    function handleCancelAddProject() {
+        setProjectsState((prevState) => {
             return {
                 ...prevState,
                 selectedProjectId: undefined,
@@ -42,16 +53,16 @@ function App() {
             };
         });
     }
+const selectedProject = projectsState.projects.find(project => project.id === projectsState.selectedProjectId);
 
-
-    let content;
+    let content = <SelectedProject  project={selectedProject}/>;
 
     if (projectsState.selectedProjectId === null) {
         content = (
-            <NewProjects onAdd={handleAddProject} onCancel={handleCancelAddProject} />
+            <NewProjects onAdd={handleAddProject} onCancel={handleCancelAddProject}/>
         );
     } else if (projectsState.selectedProjectId === undefined) {
-        content = <NoProjectSelected onStartAddProject={handleStartAddProject} />;
+        content = <NoProjectSelected onStartAddProject={handleStartAddProject}/>;
     }
 
     return (
@@ -59,6 +70,7 @@ function App() {
             <ProjectsSidebar
                 onStartAddProject={handleStartAddProject}
                 projects={projectsState.projects}
+                onSelectProject={handleSelectProject}
             />
             {content}
         </main>
